@@ -8,4 +8,6 @@ public interface TestMapper {
 	 
     public List<Test> getAll() throws Exception;
     
+    public List<Test> getUserList(String userName) throws Exception;
+   
 }

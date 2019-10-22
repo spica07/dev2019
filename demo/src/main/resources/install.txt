@@ -1,0 +1,3 @@
+node.js npm 설지
+parcel 설지
+git 설치

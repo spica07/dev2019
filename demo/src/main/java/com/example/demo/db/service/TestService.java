@@ -17,4 +17,8 @@ public class TestService {
     public List<Test> getAll() throws Exception{
         return testMapper.getAll();
     }
+    
+    public List<Test> getUserList(String userName) throws Exception{
+        return testMapper.getUserList(userName);
+    }
 }

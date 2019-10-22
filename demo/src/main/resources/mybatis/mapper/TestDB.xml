@@ -4,4 +4,8 @@
     <select id="getAll" resultType="com.example.demo.db.dto.Test">
         SELECT * FROM Test
     </select>
+    
+    <select id="getUserList" resultType="com.example.demo.db.dto.Test">
+        SELECT * FROM Test WHERE ID like #{userName}
+    </select>
 </mapper>
