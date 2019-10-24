@@ -10,14 +10,13 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
-  $(function() {
+ $(function() {
 
-       //autocomplete 대상의 value가 변경되면 프로세스에 사용할 변수를 초기화한다.(재검색시 해당 변수에 값을 다시 넣기위함)
+ //autocomplete 대상의 value가 변경되면 프로세스에 사용할 변수를 초기화한다.(재검색시 해당 변수에 값을 다시 넣기위함)
 
  $("#autocompleteUserName").change(function(){
-  selectedUser = "";
+     selectedUser = "";
      $("#userId").val("");
-
  });
     //input의 id를 autocomplete한다.
     $( "#autocompleteUserName").autocomplete({
@@ -78,6 +77,19 @@
 
   });
 
+ function search() {
+	 var userName = document.getElementById("autocompleteUserName").value;
+	 
+	 if(localStorage.getItem('test') != null) {
+	     localStorage.setItem('test', userName);
+	 } else {
+		 localStorage.setItem('test', localStorage.getItem('test') + ',' +  userName);
+	 }
+ }
+ 
+ function delete() {
+	 localStorage.clear();
+ }
   </script>
 </head>
 <body>
@@ -89,6 +101,8 @@
 <div class="ui-widget">
   <label for="tags">User</label>
   <input type="text" id="autocompleteUserName" name="autocompleteUserName" size="40"> <!-- //지정된 input box의 size만큼 autocomplete사이즈 자동변경 -->
+  <input type="button" value="Search" onclick="search()" />
+  <input type="button" value="Delete" onclick="delete()" />
 </div>
  
 </body>
