@@ -1,0 +1,52 @@
+language: java
+jdk:
+  - openjdk8
+
+before_install:
+  - chmod +x mvnw
+    
+script: ./mvnw clean install
+
+cache:
+  directories:
+    - $HOME/.m2
+
+
+# Travis CI & S3 연동
+before_deploy:
+  - cp *.yml ./target
+  - cp *.sh ./target
+  - cd ./target
+  - zip cna *.jar *.yml *.sh
+  - cd ../
+  - mkdir -p deploy
+  - mv ./target/cna.zip ./deploy
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY 
+    secret_access_key: $AWS_SECRET_KEY 
+    bucket: cna-web-deploy
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: public_read
+    wait-until-deployed: true
+    local_dir: deploy
+    on:
+      repo: spica07/dev2019
+      branch: master    
+      
+ # Travis CI & CodeDeploy 연동     
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: cna-web-deploy
+    bundle_type: zip
+    key: cna.zip
+    application: cna-web
+    deployment_group: cna-web-group
+    region: ap-northeast-2
+    wait-until-deployed: true    
+    on:
+      repo: spica07/dev2019
+      branch: master     
