@@ -1,0 +1,13 @@
+version: 0.0
+os: linux
+files:
+  - source:  /
+    destination: /home/ec2-user/application/docker_images/cna_chem
+    overwrite: yes
+    
+hooks:
+  AfterInstall: 
+    - location: deploy.sh
+      timeout: 180    
+      runas: root
+      
